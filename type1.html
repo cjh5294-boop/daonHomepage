@@ -29,8 +29,8 @@
     padding: 0 5%;
     height: 70px;
   }
-  .nav-logo { display:flex; align-items:center; gap:12px; }
-  .nav-logo img { height:40px; }
+  .nav-logo { display:flex; align-items:center; flex:0 0 auto; }
+  .nav-logo img { display:block; height:52px; width:auto; max-width:260px; }
   .nav-logo span { font-size:1.2rem; font-weight:700; color:#fff; letter-spacing:1px; }
   .nav-menu { display:flex; gap:36px; list-style:none; }
   .nav-menu a { color:#ccc; text-decoration:none; font-size:0.9rem; font-weight:500; transition:color 0.2s; }
@@ -196,6 +196,7 @@
     .step:not(:last-child)::after { content:'↓'; right:50%; top:auto; bottom:-16px; transform:none; }
   }
   @media (max-width: 768px) {
+    .nav-logo img { height:44px; max-width:220px; }
     .nav-menu { display:none; flex-direction:column; position:absolute; top:70px; left:0; right:0; background:rgba(13,13,26,0.98); padding:20px 5%; gap:20px; }
     .nav-menu.open { display:flex; }
     .hamburger { display:flex; }
@@ -209,8 +210,7 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">
-    <img src="images/logo.jpg" alt="다온 로고">
-    <span>DAON</span>
+    <img src="images/logoPng1-nav.png" alt="다온 로고">
   </div>
   <ul class="nav-menu" id="navMenu">
     <li><a href="#business">사업분야</a></li>
