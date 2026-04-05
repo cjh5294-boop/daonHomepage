@@ -1,0 +1,447 @@
+logo_b64 = open("/Users/sammy/workspaces/guest-cjh5294/daonHomepage/logos_b64.txt").read().strip()
+
+html = f"""<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>다온 - 스마트 드론 방제 전문기업</title>
+<style>
+  :root {{
+    --primary: #1a1a2e;
+    --accent: #e94560;
+    --accent2: #0f3460;
+    --gold: #c8a96e;
+    --light: #f5f5f5;
+    --white: #ffffff;
+    --gray: #888;
+    --card-bg: #16213e;
+  }}
+  * {{ margin:0; padding:0; box-sizing:border-box; }}
+  html {{ scroll-behavior: smooth; }}
+  body {{ font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background:#0d0d1a; color:#eee; }}
+
+  /* ===== NAV ===== */
+  nav {{
+    position: fixed; top:0; left:0; right:0; z-index:1000;
+    background: rgba(13,13,26,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(233,69,96,0.2);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 70px;
+  }}
+  .nav-logo {{ display:flex; align-items:center; gap:12px; }}
+  .nav-logo img {{ height:40px; }}
+  .nav-logo span {{ font-size:1.2rem; font-weight:700; color:#fff; letter-spacing:1px; }}
+  .nav-menu {{ display:flex; gap:36px; list-style:none; }}
+  .nav-menu a {{ color:#ccc; text-decoration:none; font-size:0.9rem; font-weight:500; transition:color 0.2s; }}
+  .nav-menu a:hover {{ color:var(--accent); }}
+  .nav-cta {{ background:var(--accent); color:#fff; padding:10px 22px; border-radius:4px; font-size:0.85rem; font-weight:600; text-decoration:none; transition:background 0.2s; }}
+  .nav-cta:hover {{ background:#c73652; }}
+  .hamburger {{ display:none; flex-direction:column; gap:5px; cursor:pointer; }}
+  .hamburger span {{ display:block; width:25px; height:2px; background:#fff; transition:0.3s; }}
+
+  /* ===== HERO ===== */
+  .hero {{
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 50%, #0f3460 100%);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 100px 5% 60px;
+    position: relative; overflow: hidden;
+  }}
+  .hero::before {{
+    content:'';
+    position:absolute; inset:0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(233,69,96,0.12) 0%, transparent 60%);
+  }}
+  .hero-content {{ position:relative; z-index:1; max-width:800px; }}
+  .hero-badge {{
+    display:inline-block; background:rgba(233,69,96,0.15); border:1px solid rgba(233,69,96,0.4);
+    color:var(--accent); padding:6px 18px; border-radius:20px; font-size:0.8rem; font-weight:600;
+    letter-spacing:2px; margin-bottom:24px;
+  }}
+  .hero h1 {{ font-size:clamp(2.2rem,5vw,4rem); font-weight:800; line-height:1.2; color:#fff; margin-bottom:20px; }}
+  .hero h1 span {{ color:var(--accent); }}
+  .hero p {{ font-size:clamp(1rem,2vw,1.2rem); color:#aaa; line-height:1.7; margin-bottom:40px; }}
+  .hero-btns {{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }}
+  .btn-primary {{ background:var(--accent); color:#fff; padding:14px 32px; border-radius:6px; font-size:1rem; font-weight:700; text-decoration:none; transition:0.2s; }}
+  .btn-primary:hover {{ background:#c73652; transform:translateY(-2px); }}
+  .btn-outline {{ border:2px solid rgba(255,255,255,0.3); color:#fff; padding:14px 32px; border-radius:6px; font-size:1rem; font-weight:600; text-decoration:none; transition:0.2s; }}
+  .btn-outline:hover {{ border-color:#fff; background:rgba(255,255,255,0.05); }}
+  .hero-stats {{ display:flex; gap:48px; justify-content:center; margin-top:60px; flex-wrap:wrap; }}
+  .stat {{ text-align:center; }}
+  .stat-num {{ font-size:2.2rem; font-weight:800; color:var(--gold); }}
+  .stat-label {{ font-size:0.85rem; color:#888; margin-top:4px; }}
+
+  /* ===== SECTIONS ===== */
+  section {{ padding: 90px 5%; }}
+  .section-label {{ color:var(--accent); font-size:0.8rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; margin-bottom:12px; }}
+  .section-title {{ font-size:clamp(1.8rem,3vw,2.6rem); font-weight:800; color:#fff; margin-bottom:16px; }}
+  .section-sub {{ color:#888; font-size:1rem; line-height:1.7; max-width:600px; }}
+
+  /* ===== BUSINESS AREAS ===== */
+  .business {{ background:#0d0d1a; }}
+  .biz-grid {{ display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:24px; margin-top:48px; }}
+  .biz-card {{
+    background: var(--card-bg);
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:12px; padding:36px 28px;
+    transition:0.3s; position:relative; overflow:hidden;
+  }}
+  .biz-card::before {{
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background:var(--accent); transform:scaleX(0); transition:0.3s; transform-origin:left;
+  }}
+  .biz-card:hover {{ transform:translateY(-6px); border-color:rgba(233,69,96,0.3); }}
+  .biz-card:hover::before {{ transform:scaleX(1); }}
+  .biz-icon {{ font-size:2.4rem; margin-bottom:20px; }}
+  .biz-title {{ font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px; }}
+  .biz-desc {{ font-size:0.9rem; color:#888; line-height:1.6; }}
+
+  /* ===== SPRAY (방제) ===== */
+  .spray {{ background: linear-gradient(180deg, #0d0d1a 0%, #0f1e3a 100%); }}
+  .spray-grid {{ display:grid; grid-template-columns: 1fr 1fr; gap:60px; align-items:center; margin-top:48px; }}
+  .spray-list {{ list-style:none; }}
+  .spray-list li {{ display:flex; align-items:flex-start; gap:14px; padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.06); }}
+  .spray-list li:last-child {{ border-bottom:none; }}
+  .spray-check {{ color:var(--accent); font-size:1.1rem; margin-top:2px; }}
+  .spray-text h4 {{ color:#fff; font-size:1rem; font-weight:600; margin-bottom:4px; }}
+  .spray-text p {{ color:#888; font-size:0.88rem; line-height:1.5; }}
+  .spray-visual {{
+    background: linear-gradient(135deg, #0f3460, #16213e);
+    border-radius:16px; padding:40px; border:1px solid rgba(233,69,96,0.2);
+    text-align:center;
+  }}
+  .spray-visual .big-num {{ font-size:4rem; font-weight:900; color:var(--accent); }}
+  .spray-visual p {{ color:#aaa; font-size:0.95rem; margin-top:8px; }}
+  .spray-tags {{ display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; justify-content:center; }}
+  .spray-tag {{ background:rgba(233,69,96,0.1); border:1px solid rgba(233,69,96,0.3); color:var(--accent); padding:6px 14px; border-radius:20px; font-size:0.8rem; }}
+
+  /* ===== TECH ===== */
+  .tech {{ background:#0d0d1a; }}
+  .tech-grid {{ display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:20px; margin-top:48px; }}
+  .tech-card {{
+    background:var(--card-bg); border:1px solid rgba(255,255,255,0.06);
+    border-radius:10px; padding:28px 24px; transition:0.3s;
+  }}
+  .tech-card:hover {{ border-color:rgba(200,169,110,0.4); transform:translateY(-4px); }}
+  .tech-card .icon {{ font-size:2rem; margin-bottom:16px; }}
+  .tech-card h4 {{ color:var(--gold); font-size:1rem; font-weight:700; margin-bottom:8px; }}
+  .tech-card p {{ color:#888; font-size:0.85rem; line-height:1.6; }}
+
+  /* ===== PROCESS ===== */
+  .process {{ background: linear-gradient(180deg, #0d0d1a 0%, #0f1e3a 100%); }}
+  .process-steps {{ display:flex; gap:0; margin-top:48px; flex-wrap:wrap; }}
+  .step {{
+    flex:1; min-width:160px; text-align:center; padding:32px 16px;
+    position:relative;
+  }}
+  .step:not(:last-child)::after {{
+    content:'→'; position:absolute; right:-12px; top:50%; transform:translateY(-50%);
+    color:var(--accent); font-size:1.4rem;
+  }}
+  .step-num {{
+    width:52px; height:52px; border-radius:50%;
+    background:var(--accent); color:#fff; font-size:1.2rem; font-weight:800;
+    display:flex; align-items:center; justify-content:center; margin:0 auto 16px;
+  }}
+  .step h4 {{ color:#fff; font-size:0.95rem; font-weight:700; margin-bottom:6px; }}
+  .step p {{ color:#888; font-size:0.82rem; line-height:1.5; }}
+
+  /* ===== TRACK RECORD ===== */
+  .record {{ background:#0d0d1a; }}
+  .record-grid {{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:24px; margin-top:48px; }}
+  .record-card {{
+    background:var(--card-bg); border-radius:12px; padding:32px;
+    border-left:4px solid var(--gold);
+  }}
+  .record-card .org {{ color:var(--gold); font-size:0.85rem; font-weight:700; letter-spacing:1px; margin-bottom:12px; }}
+  .record-card h4 {{ color:#fff; font-size:1.1rem; font-weight:700; margin-bottom:10px; }}
+  .record-card p {{ color:#888; font-size:0.88rem; line-height:1.6; }}
+  .record-num {{ font-size:2rem; font-weight:800; color:var(--accent); margin-top:16px; }}
+
+  /* ===== CONTACT ===== */
+  .contact {{ background: linear-gradient(135deg, #0f3460, #1a1a2e); }}
+  .contact-wrap {{ display:grid; grid-template-columns: 1fr 1fr; gap:60px; align-items:start; margin-top:48px; }}
+  .contact-info h3 {{ color:#fff; font-size:1.4rem; font-weight:700; margin-bottom:20px; }}
+  .contact-item {{ display:flex; gap:14px; margin-bottom:20px; align-items:flex-start; }}
+  .contact-item .ci-icon {{ color:var(--accent); font-size:1.2rem; margin-top:2px; }}
+  .contact-item p {{ color:#aaa; font-size:0.9rem; line-height:1.6; }}
+  .contact-form input, .contact-form textarea {{
+    width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+    border-radius:6px; padding:14px 16px; color:#fff; font-size:0.9rem;
+    margin-bottom:14px; outline:none; transition:0.2s;
+    font-family: inherit;
+  }}
+  .contact-form input:focus, .contact-form textarea:focus {{ border-color:var(--accent); }}
+  .contact-form textarea {{ height:120px; resize:vertical; }}
+  .contact-form button {{
+    width:100%; background:var(--accent); color:#fff; border:none;
+    padding:14px; border-radius:6px; font-size:1rem; font-weight:700;
+    cursor:pointer; transition:0.2s;
+  }}
+  .contact-form button:hover {{ background:#c73652; }}
+
+  /* ===== FOOTER ===== */
+  footer {{
+    background:#080810; padding:40px 5%; text-align:center;
+    border-top:1px solid rgba(255,255,255,0.06);
+  }}
+  footer p {{ color:#555; font-size:0.85rem; line-height:1.8; }}
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {{
+    .spray-grid, .contact-wrap {{ grid-template-columns:1fr; gap:36px; }}
+    .process-steps {{ flex-direction:column; }}
+    .step:not(:last-child)::after {{ content:'↓'; right:50%; top:auto; bottom:-16px; transform:none; }}
+  }}
+  @media (max-width: 768px) {{
+    .nav-menu {{ display:none; flex-direction:column; position:absolute; top:70px; left:0; right:0; background:rgba(13,13,26,0.98); padding:20px 5%; gap:20px; }}
+    .nav-menu.open {{ display:flex; }}
+    .hamburger {{ display:flex; }}
+    .nav-cta {{ display:none; }}
+    .hero-stats {{ gap:24px; }}
+  }}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="data:image/jpeg;base64,{logo_b64}" alt="다온 로고">
+    <span>DAON</span>
+  </div>
+  <ul class="nav-menu" id="navMenu">
+    <li><a href="#business">사업분야</a></li>
+    <li><a href="#spray">스마트방제</a></li>
+    <li><a href="#tech">기술</a></li>
+    <li><a href="#process">방제프로세스</a></li>
+    <li><a href="#record">실적</a></li>
+    <li><a href="#contact">문의</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">무료 상담</a>
+  <div class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">SMART DRONE SPECIALIST</div>
+    <h1>드론으로 완성하는<br><span>스마트 농업의 미래</span></h1>
+    <p>정밀 방제부터 드론 교육, 운송, DJI 공식 판매까지<br>다온이 드론 산업의 모든 것을 책임집니다.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">무료 상담 신청</a>
+      <a href="#business" class="btn-outline">사업분야 보기</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-label">누적 방제 면적(ha)</div></div>
+      <div class="stat"><div class="stat-num">10+</div><div class="stat-label">보유 드론 대수</div></div>
+      <div class="stat"><div class="stat-num">98%</div><div class="stat-label">고객 만족도</div></div>
+      <div class="stat"><div class="stat-num">5+</div><div class="stat-label">협력 농협</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BUSINESS AREAS -->
+<section class="business" id="business">
+  <div class="section-label">BUSINESS AREAS</div>
+  <div class="section-title">다온의 4가지 핵심 사업</div>
+  <p class="section-sub">드론 기술을 기반으로 농업, 교육, 물류, 장비 판매까지 토탈 솔루션을 제공합니다.</p>
+  <div class="biz-grid">
+    <div class="biz-card">
+      <div class="biz-icon">🚁</div>
+      <div class="biz-title">스마트 드론 방제</div>
+      <div class="biz-desc">RTK GPS 기반 정밀 항법과 GIS 연동으로 최적화된 자동 방제 서비스. 농약 사용량 절감, 작업 효율 극대화.</div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-icon">🎓</div>
+      <div class="biz-title">드론 교육</div>
+      <div class="biz-desc">국가 자격증 취득부터 실무 운용까지. 체계적인 커리큘럼으로 드론 전문 인력을 양성합니다.</div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-icon">📦</div>
+      <div class="biz-title">드론 운송</div>
+      <div class="biz-desc">도서산간 지역 물류 배송, 긴급 물자 운반 등 드론을 활용한 스마트 물류 서비스.</div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-icon">🛒</div>
+      <div class="biz-title">DJI 드론 판매</div>
+      <div class="biz-desc">DJI 공식 파트너로서 농업용·산업용·소비자용 드론 및 관련 액세서리 판매와 A/S 지원.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SMART SPRAY -->
+<section class="spray" id="spray">
+  <div class="section-label">SMART SPRAY</div>
+  <div class="section-title">정밀 드론 방제 서비스</div>
+  <div class="spray-grid">
+    <div>
+      <p class="section-sub" style="margin-bottom:32px;">기존 수동 방제의 한계를 넘어, 드론 자동화로 생산성과 안전성을 동시에 확보합니다.</p>
+      <ul class="spray-list">
+        <li>
+          <span class="spray-check">✔</span>
+          <div class="spray-text"><h4>RTK GPS 정밀 항법</h4><p>오차 2cm 이내의 정밀한 위치 제어로 균일한 방제 품질 보장</p></div>
+        </li>
+        <li>
+          <span class="spray-check">✔</span>
+          <div class="spray-text"><h4>GIS 기반 자동 경로 설정</h4><p>지형 데이터 분석으로 최적 비행 경로 자동 생성</p></div>
+        </li>
+        <li>
+          <span class="spray-check">✔</span>
+          <div class="spray-text"><h4>드팜매니저 연동</h4><p>방제 이력 관리, 면적 산출, 작업 보고서 자동 생성</p></div>
+        </li>
+        <li>
+          <span class="spray-check">✔</span>
+          <div class="spray-text"><h4>야간·악천후 대응</h4><p>고성능 센서 탑재로 다양한 환경에서도 안정적 운용</p></div>
+        </li>
+      </ul>
+    </div>
+    <div class="spray-visual">
+      <div class="big-num">70%</div>
+      <p>수동 방제 대비 작업시간 단축</p>
+      <div class="spray-tags">
+        <span class="spray-tag">RTK GPS</span>
+        <span class="spray-tag">자동항법</span>
+        <span class="spray-tag">GIS 연동</span>
+        <span class="spray-tag">드팜매니저</span>
+        <span class="spray-tag">이력관리</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section class="tech" id="tech">
+  <div class="section-label">TECHNOLOGY</div>
+  <div class="section-title">핵심 기술</div>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="icon">📡</div>
+      <h4>RTK GPS</h4>
+      <p>실시간 이동 측위로 cm급 정밀도 실현. 균일한 살포 품질 보장.</p>
+    </div>
+    <div class="tech-card">
+      <div class="icon">🗺️</div>
+      <h4>GIS 공간분석</h4>
+      <p>필지 경계, 지형 데이터 기반 최적 비행 경로 자동 생성.</p>
+    </div>
+    <div class="tech-card">
+      <div class="icon">💻</div>
+      <h4>드팜매니저</h4>
+      <p>방제 이력 통합 관리, 면적 산출, 실시간 모니터링 플랫폼.</p>
+    </div>
+    <div class="tech-card">
+      <div class="icon">🤖</div>
+      <h4>군집 드론</h4>
+      <p>다수 드론 동시 운용으로 대면적 방제 효율 극대화.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-label">PROCESS</div>
+  <div class="section-title">방제 진행 프로세스</div>
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h4>현장 조사</h4>
+      <p>필지 면적 측량<br>작물·병해충 확인</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h4>경로 설계</h4>
+      <p>GIS 기반<br>자동 경로 생성</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h4>약제 준비</h4>
+      <p>작물별 최적<br>약제 배합</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h4>드론 방제</h4>
+      <p>RTK 자동항법<br>정밀 살포</p>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <h4>결과 보고</h4>
+      <p>드팜매니저<br>이력 자동 저장</p>
+    </div>
+  </div>
+</section>
+
+<!-- TRACK RECORD -->
+<section class="record" id="record">
+  <div class="section-label">TRACK RECORD</div>
+  <div class="section-title">주요 실적</div>
+  <div class="record-grid">
+    <div class="record-card">
+      <div class="org">철원농협</div>
+      <h4>공동방제단 운영</h4>
+      <p>철원 평야 대면적 공동방제 사업 수행. RTK 드론 활용 정밀 방제 시스템 구축.</p>
+      <div class="record-num">200+ ha</div>
+    </div>
+    <div class="record-card">
+      <div class="org">김화농협</div>
+      <h4>스마트 방제 서비스</h4>
+      <p>드팜매니저 연동 방제 이력 관리 체계 구축. 방제 효율 대폭 향상.</p>
+      <div class="record-num">150+ ha</div>
+    </div>
+    <div class="record-card">
+      <div class="org">드론 교육</div>
+      <h4>조종사 양성 프로그램</h4>
+      <p>국가 자격증 취득 과정 운영. 농업용 드론 전문 조종사 다수 배출.</p>
+      <div class="record-num">50+ 명</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label">CONTACT</div>
+  <div class="section-title">문의하기</div>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <h3>다온과 함께<br>스마트 농업을 시작하세요</h3>
+      <div class="contact-item">
+        <span class="ci-icon">📞</span>
+        <p>전화 상담<br><strong style="color:#fff">000-0000-0000</strong></p>
+      </div>
+      <div class="contact-item">
+        <span class="ci-icon">✉️</span>
+        <p>이메일 문의<br><strong style="color:#fff">info@daon.kr</strong></p>
+      </div>
+      <div class="contact-item">
+        <span class="ci-icon">📍</span>
+        <p>주소<br><strong style="color:#fff">강원도 철원군</strong></p>
+      </div>
+    </div>
+    <div class="contact-form">
+      <input type="text" placeholder="성함">
+      <input type="text" placeholder="연락처">
+      <input type="text" placeholder="문의 분야 (방제 / 교육 / 운송 / 드론 구매)">
+      <textarea placeholder="문의 내용을 입력해주세요."></textarea>
+      <button type="submit">상담 신청하기</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2024 다온 (DAON). All Rights Reserved.<br>
+  스마트 드론 방제 | 드론 교육 | 드론 운송 | DJI 드론 판매</p>
+</footer>
+
+</body>
+</html>"""
+
+with open("/Users/sammy/workspaces/guest-cjh5294/daonHomepage/index.html", "w") as f:
+    f.write(html)
+print("완료! 파일 크기:", len(html), "bytes")
